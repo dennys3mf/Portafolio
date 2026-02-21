@@ -1,5 +1,4 @@
 ---
-import { db, eq, Comment, Author } from "astro:db";
 import Layout from "@layouts/Layout.astro";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { Image } from "astro:assets";
@@ -8,55 +7,6 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const { project } = Astro.props;
-
-// Consultar comentarios del proyecto
-let comentarios = await db
-  .select()
-  .from(Comment)
-  .where(eq(Comment.postId, project.data.id));
-
-let authores = await db.select().from(Author);
-
-// Insertar datos a partir de un form
-if (Astro.request.method === "POST") {
-  const formData = await Astro.request.formData();
-  const comment = formData.get("comment");
-  const name = formData.get("name");
-  const country = formData.get("country");
-
-  if (!comment || !name || !country) {
-    console.error("Faltan datos en el formulario");
-  } else {
-    // Buscar o crear autor
-    let author = authores.find((a) => a.name === name && a.country === country);
-    
-    if (!author) {
-      const newAuthorId = authores.length > 0 ? Math.max(...authores.map(a => a.id)) + 1 : 1;
-      await db.insert(Author).values({
-        id: newAuthorId,
-        name: name.toString(),
-        country: country.toString(),
-      });
-      author = { id: newAuthorId, name: name.toString(), country: country.toString() };
-      authores.push(author);
-    }
-
-    // Insertar comentario
-    const newCommentId = comentarios.length > 0 ? Math.max(...comentarios.map(c => c.id)) + 1 : 1;
-    await db.insert(Comment).values({
-      id: newCommentId,
-      postId: project.data.id,
-      body: comment.toString(),
-      authorId: author.id,
-    });
-
-    // Recargar comentarios
-    comentarios = await db
-      .select()
-      .from(Comment)
-      .where(eq(Comment.postId, project.data.id));
-  }
-}
 
 const formattedDate = new Intl.DateTimeFormat(lang, {
   dateStyle: "long",
@@ -150,68 +100,11 @@ const formattedDate = new Intl.DateTimeFormat(lang, {
         })
       }
     </div>
-
-    <!-- Formulario de comentarios -->
-    <form
-      method="post"
-      id="commentForm"
-      class="space-y-6 bg-surface p-6 rounded-lg shadow-md"
-    >
-      <div class="flex flex-row items-center gap-4 mb-4">
-        <div class="w-12 h-12 bg-primary-200 dark:bg-primary-800 rounded-full flex items-center justify-center">
-          <span class="text-2xl">🌍</span>
-        </div>
-        <div class="flex-1">
-          <label
-            for="name"
-            class="block text-sm font-medium text-text-main mb-1"
-          >
-            {t("project.comments.name")}:
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            required
-            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md
-            bg-white dark:bg-gray-800 text-text-main
-            focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-          />
-        </div>
-      </div>
-
-      <input type="hidden" name="country" value="MX" />
-
-      <div>
-        <label
-          for="comment"
-          class="block text-sm font-medium text-text-main mb-2"
-        >
-          {t("project.comments.comment")}:
-        </label>
-        <textarea
-          id="comment"
-          name="comment"
-          rows="4"
-          required
-          class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md
-          bg-white dark:bg-gray-800 text-text-main
-          focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-        ></textarea>
-      </div>
-
-      <button
-        type="submit"
-        class="w-full bg-primary-700 hover:bg-primary-600 text-white font-semibold px-6 py-3 rounded-md transition duration-200"
-      >
-        {t("project.comments.send")}
-      </button>
-    </form>
   </section>
 </Layout>
 
 <style>
-  .comments-section {
+  .project-section {
     margin-top: 2rem;
   }
 </style>

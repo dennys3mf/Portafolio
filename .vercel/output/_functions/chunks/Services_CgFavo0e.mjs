@@ -3,7 +3,7 @@ import 'piccolore';
 import { Sun, Moon } from 'lucide-react';
 /* empty css                         */
 import 'clsx';
-import { a as getLangFromUrl, e as getLanguageName, f as getLanguages, b as getCollection, c as getEntries, d as useTranslatedPath } from './_astro_content_z9ZD0c5f.mjs';
+import { a as getLangFromUrl, e as getLanguageName, f as getLanguages, b as getCollection, c as getEntries, d as useTranslatedPath } from './_astro_content_DBlyr6LJ.mjs';
 import { $ as $$Image } from './_astro_assets_AKK8XZqR.mjs';
 
 const $$ThemeToggle = createComponent(($$result, $$props, $$slots) => {

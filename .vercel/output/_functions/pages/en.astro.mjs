@@ -1,7 +1,7 @@
 import { c as createComponent, r as renderComponent, a as renderTemplate, b as createAstro, m as maybeRenderHead } from '../chunks/astro/server_CH_ZUc5U.mjs';
 import 'piccolore';
-import { a as getLangFromUrl, $ as $$Layout, u as useTranslations } from '../chunks/_astro_content_z9ZD0c5f.mjs';
-import { $ as $$Navbar, a as $$Projects, b as $$Services, c as $$Skills } from '../chunks/Services_Dh_LISHo.mjs';
+import { a as getLangFromUrl, $ as $$Layout, u as useTranslations } from '../chunks/_astro_content_DBlyr6LJ.mjs';
+import { $ as $$Navbar, a as $$Projects, b as $$Services, c as $$Skills } from '../chunks/Services_CgFavo0e.mjs';
 import { Smartphone, Code2 } from 'lucide-react';
 export { renderers } from '../renderers.mjs';
 

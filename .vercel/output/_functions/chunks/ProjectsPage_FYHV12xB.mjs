@@ -1,6 +1,6 @@
 import { c as createComponent, m as maybeRenderHead, d as addAttribute, r as renderComponent, a as renderTemplate, b as createAstro } from './astro/server_CH_ZUc5U.mjs';
 import 'piccolore';
-import { a as getLangFromUrl, c as getEntries, u as useTranslations, d as useTranslatedPath } from './_astro_content_z9ZD0c5f.mjs';
+import { a as getLangFromUrl, c as getEntries, u as useTranslations, d as useTranslatedPath } from './_astro_content_DBlyr6LJ.mjs';
 import { $ as $$Image } from './_astro_assets_AKK8XZqR.mjs';
 
 const $$Astro = createAstro();
