@@ -169,7 +169,7 @@ class ImmutableDataStore {
    */
   static async fromModule() {
     try {
-      const data = await import('./_astro_data-layer-content_CUfP2Eh2.mjs');
+      const data = await import('./_astro_data-layer-content_gALWnzPT.mjs');
       if (data.default instanceof Map) {
         return ImmutableDataStore.fromMap(data.default);
       }
@@ -243,7 +243,7 @@ function createGetCollection({
     } else if (collection in dataCollectionToEntryMap) {
       type = "data";
     } else if (store.hasCollection(collection)) {
-      const { default: imageAssetMap } = await import('./content-assets_OB3Tvaxi.mjs');
+      const { default: imageAssetMap } = await import('./content-assets_BJLFp09R.mjs');
       const result = [];
       for (const rawEntry of store.values(collection)) {
         const data = updateImageReferencesInData(rawEntry.data, rawEntry.filePath, imageAssetMap);
@@ -362,7 +362,7 @@ function createGetEntry({
         console.warn(`Entry ${collection} → ${lookupId} was not found.`);
         return;
       }
-      const { default: imageAssetMap } = await import('./content-assets_OB3Tvaxi.mjs');
+      const { default: imageAssetMap } = await import('./content-assets_BJLFp09R.mjs');
       entry2.data = updateImageReferencesInData(entry2.data, entry2.filePath, imageAssetMap);
       if (entry2.legacyId) {
         return emulateLegacyEntry({ ...entry2, collection });
@@ -413,7 +413,7 @@ function createGetEntries(getEntry) {
 }
 const CONTENT_LAYER_IMAGE_REGEX = /__ASTRO_IMAGE_="([^"]+)"/g;
 async function updateImageReferencesInBody(html, fileName) {
-  const { default: imageAssetMap } = await import('./content-assets_OB3Tvaxi.mjs');
+  const { default: imageAssetMap } = await import('./content-assets_BJLFp09R.mjs');
   const imageObjects = /* @__PURE__ */ new Map();
   const { getImage } = await import('./_astro_assets_AKK8XZqR.mjs').then(n => n._);
   for (const [_full, imagePath] of html.matchAll(CONTENT_LAYER_IMAGE_REGEX)) {

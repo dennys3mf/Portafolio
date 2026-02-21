@@ -3,7 +3,7 @@ import 'piccolore';
 import { normalizeDatabaseUrl, asDrizzleTable } from '@astrojs/db/runtime';
 import { createClient } from '@astrojs/db/db-client/libsql-local.js';
 import { eq } from '@astrojs/db/dist/runtime/virtual.js';
-import { a as getLangFromUrl, $ as $$Layout, u as useTranslations } from './_astro_content_Bo6M-qVv.mjs';
+import { a as getLangFromUrl, $ as $$Layout, u as useTranslations } from './_astro_content_z9ZD0c5f.mjs';
 import { $ as $$Image } from './_astro_assets_AKK8XZqR.mjs';
 /* empty css                          */
 
