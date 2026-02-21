@@ -1,230 +1,57 @@
-import { db, Project, Skill, Testimonial, BlogPost, Contact } from 'astro:db';
-import { eq, desc, and } from 'astro:db';
+import { db, Author, Comment } from 'astro:db';
+import { eq, desc } from 'astro:db';
 
 /**
  * Utilidades para consultas a la base de datos
  */
 
-// ==================== PROJECTS ====================
+// ==================== COMMENTS ====================
 
 /**
- * Obtener todos los proyectos
+ * Obtener todos los comentarios
  */
-export async function getAllProjects() {
-  return await db.select().from(Project);
+export async function getAllComments() {
+  return await db.select().from(Comment);
 }
 
 /**
- * Obtener proyectos destacados
+ * Obtener comentarios por post
  */
-export async function getFeaturedProjects() {
+export async function getCommentsByPost(postId: string) {
   return await db
     .select()
-    .from(Project)
-    .where(eq(Project.featured, true));
+    .from(Comment)
+    .where(eq(Comment.postId, postId))
+    .orderBy(desc(Comment.id));
 }
 
 /**
- * Obtener proyectos por categoría
+ * Obtener un comentario por ID
  */
-export async function getProjectsByCategory(category: string) {
-  return await db
-    .select()
-    .from(Project)
-    .where(eq(Project.category, category));
-}
-
-/**
- * Obtener un proyecto por slug
- */
-export async function getProjectBySlug(slug: string) {
+export async function getCommentById(id: string) {
   const result = await db
     .select()
-    .from(Project)
-    .where(eq(Project.slug, slug));
+    .from(Comment)
+    .where(eq(Comment.id, id));
   return result[0];
 }
 
-// ==================== SKILLS ====================
+// ==================== AUTHORS ====================
 
 /**
- * Obtener todas las habilidades
+ * Obtener todos los autores
  */
-export async function getAllSkills() {
-  return await db
-    .select()
-    .from(Skill)
-    .orderBy(Skill.order);
+export async function getAllAuthors() {
+  return await db.select().from(Author);
 }
 
 /**
- * Obtener habilidades destacadas
+ * Obtener un autor por ID
  */
-export async function getFeaturedSkills() {
-  return await db
-    .select()
-    .from(Skill)
-    .where(eq(Skill.featured, true))
-    .orderBy(Skill.order);
-}
-
-/**
- * Obtener habilidades por categoría
- */
-export async function getSkillsByCategory(category: string) {
-  return await db
-    .select()
-    .from(Skill)
-    .where(eq(Skill.category, category))
-    .orderBy(Skill.order);
-}
-
-/**
- * Obtener habilidades por nivel
- */
-export async function getSkillsByLevel(level: string) {
-  return await db
-    .select()
-    .from(Skill)
-    .where(eq(Skill.level, level))
-    .orderBy(Skill.order);
-}
-
-// ==================== TESTIMONIALS ====================
-
-/**
- * Obtener todos los testimonios
- */
-export async function getAllTestimonials() {
-  return await db.select().from(Testimonial);
-}
-
-/**
- * Obtener testimonios destacados
- */
-export async function getFeaturedTestimonials() {
-  return await db
-    .select()
-    .from(Testimonial)
-    .where(eq(Testimonial.featured, true));
-}
-
-/**
- * Obtener testimonios por proyecto
- */
-export async function getTestimonialsByProject(projectId: number) {
-  return await db
-    .select()
-    .from(Testimonial)
-    .where(eq(Testimonial.projectId, projectId));
-}
-
-// ==================== BLOG POSTS ====================
-
-/**
- * Obtener todos los artículos publicados
- */
-export async function getAllBlogPosts() {
-  return await db
-    .select()
-    .from(BlogPost)
-    .where(eq(BlogPost.published, true))
-    .orderBy(desc(BlogPost.publishedAt));
-}
-
-/**
- * Obtener artículos destacados
- */
-export async function getFeaturedBlogPosts() {
-  return await db
-    .select()
-    .from(BlogPost)
-    .where(and(eq(BlogPost.published, true), eq(BlogPost.featured, true)))
-    .orderBy(desc(BlogPost.publishedAt));
-}
-
-/**
- * Obtener artículos por categoría
- */
-export async function getBlogPostsByCategory(category: string) {
-  return await db
-    .select()
-    .from(BlogPost)
-    .where(and(eq(BlogPost.published, true), eq(BlogPost.category, category)))
-    .orderBy(desc(BlogPost.publishedAt));
-}
-
-/**
- * Obtener artículos por etiqueta
- */
-export async function getBlogPostsByTag(tag: string) {
-  const posts = await getAllBlogPosts();
-  return posts.filter(post => 
-    (post.tags as string[]).includes(tag)
-  );
-}
-
-/**
- * Obtener un artículo por slug
- */
-export async function getBlogPostBySlug(slug: string) {
+export async function getAuthorById(id: string) {
   const result = await db
     .select()
-    .from(BlogPost)
-    .where(eq(BlogPost.slug, slug));
+    .from(Author)
+    .where(eq(Author.id, id));
   return result[0];
-}
-
-/**
- * Obtener artículos recientes
- */
-export async function getRecentBlogPosts(limit: number = 5) {
-  return await db
-    .select()
-    .from(BlogPost)
-    .where(eq(BlogPost.published, true))
-    .orderBy(desc(BlogPost.publishedAt))
-    .limit(limit);
-}
-
-// ==================== CONTACTS ====================
-
-/**
- * Guardar un nuevo mensaje de contacto
- */
-export async function saveContactMessage(
-  name: string,
-  email: string,
-  subject: string,
-  message: string
-) {
-  return await db.insert(Contact).values({
-    name,
-    email,
-    subject,
-    message,
-    status: 'new',
-    read: false,
-    createdAt: new Date(),
-  });
-}
-
-/**
- * Obtener todos los mensajes de contacto
- */
-export async function getAllContactMessages() {
-  return await db
-    .select()
-    .from(Contact)
-    .orderBy(desc(Contact.createdAt));
-}
-
-/**
- * Obtener mensajes sin leer
- */
-export async function getUnreadMessages() {
-  return await db
-    .select()
-    .from(Contact)
-    .where(eq(Contact.read, false));
 }
