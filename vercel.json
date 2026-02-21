@@ -2,9 +2,5 @@
   "buildCommand": "npm run build",
   "devCommand": "npm run dev",
   "installCommand": "npm install",
-  "framework": "astro",
-  "env": {
-    "NODE_ENV": "production",
-    "ASTRO_DATABASE_FILE": "file:./db.sqlite"
-  }
+  "framework": "astro"
 }

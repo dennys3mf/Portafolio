@@ -1,7 +1,7 @@
-import { c as createComponent, r as renderComponent, a as renderTemplate, b as createAstro } from '../../chunks/astro/server_CH_ZUc5U.mjs';
+import { c as createComponent, r as renderComponent, a as renderTemplate, b as createAstro } from '../../chunks/astro/server_uUssfg5y.mjs';
 import 'piccolore';
-import { $ as $$ProjectsPage } from '../../chunks/ProjectsPage_FYHV12xB.mjs';
-import { a as getLangFromUrl, b as getCollection, $ as $$Layout } from '../../chunks/_astro_content_DBlyr6LJ.mjs';
+import { $ as $$ProjectsPage } from '../../chunks/ProjectsPage_BUXHjFef.mjs';
+import { a as getLangFromUrl, b as getCollection, $ as $$Layout } from '../../chunks/_astro_content_uRh5PISs.mjs';
 export { renderers } from '../../renderers.mjs';
 
 const $$Astro = createAstro();

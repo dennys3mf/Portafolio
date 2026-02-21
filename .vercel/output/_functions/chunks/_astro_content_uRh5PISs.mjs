@@ -1,4 +1,4 @@
-import { c as createComponent, a as renderTemplate, e as renderSlot, g as renderHead, d as addAttribute, b as createAstro, A as AstroError, U as UnknownContentCollectionError, R as RenderUndefinedEntryError, u as unescapeHTML, h as renderUniqueStylesheet, i as renderScriptElement, j as createHeadAndContent, r as renderComponent } from './astro/server_CH_ZUc5U.mjs';
+import { c as createComponent, a as renderTemplate, e as renderSlot, g as renderHead, d as addAttribute, b as createAstro, A as AstroError, U as UnknownContentCollectionError, R as RenderUndefinedEntryError, u as unescapeHTML, h as renderUniqueStylesheet, i as renderScriptElement, j as createHeadAndContent, r as renderComponent } from './astro/server_uUssfg5y.mjs';
 import 'piccolore';
 import 'clsx';
 /* empty css                          */
@@ -6,8 +6,8 @@ import { escape } from 'html-escaper';
 import { Traverse } from 'neotraverse/modern';
 import pLimit from 'p-limit';
 import { z } from 'zod';
-import { r as removeBase, i as isRemotePath, p as prependForwardSlash } from './path_Bl04Vi8h.mjs';
-import { V as VALID_INPUT_FORMATS } from './_astro_assets_AKK8XZqR.mjs';
+import { r as removeBase, i as isRemotePath, p as prependForwardSlash } from './index_D7gUopMC.mjs';
+import { V as VALID_INPUT_FORMATS } from './_astro_assets_DEwNP_oA.mjs';
 import * as devalue from 'devalue';
 
 const languages = {
@@ -243,7 +243,7 @@ function createGetCollection({
     } else if (collection in dataCollectionToEntryMap) {
       type = "data";
     } else if (store.hasCollection(collection)) {
-      const { default: imageAssetMap } = await import('./content-assets_T6YXQMUj.mjs');
+      const { default: imageAssetMap } = await import('./content-assets_LTyQ5TjG.mjs');
       const result = [];
       for (const rawEntry of store.values(collection)) {
         const data = updateImageReferencesInData(rawEntry.data, rawEntry.filePath, imageAssetMap);
@@ -362,7 +362,7 @@ function createGetEntry({
         console.warn(`Entry ${collection} → ${lookupId} was not found.`);
         return;
       }
-      const { default: imageAssetMap } = await import('./content-assets_T6YXQMUj.mjs');
+      const { default: imageAssetMap } = await import('./content-assets_LTyQ5TjG.mjs');
       entry2.data = updateImageReferencesInData(entry2.data, entry2.filePath, imageAssetMap);
       if (entry2.legacyId) {
         return emulateLegacyEntry({ ...entry2, collection });
@@ -413,9 +413,9 @@ function createGetEntries(getEntry) {
 }
 const CONTENT_LAYER_IMAGE_REGEX = /__ASTRO_IMAGE_="([^"]+)"/g;
 async function updateImageReferencesInBody(html, fileName) {
-  const { default: imageAssetMap } = await import('./content-assets_T6YXQMUj.mjs');
+  const { default: imageAssetMap } = await import('./content-assets_LTyQ5TjG.mjs');
   const imageObjects = /* @__PURE__ */ new Map();
-  const { getImage } = await import('./_astro_assets_AKK8XZqR.mjs').then(n => n._);
+  const { getImage } = await import('./_astro_assets_DEwNP_oA.mjs').then(n => n._);
   for (const [_full, imagePath] of html.matchAll(CONTENT_LAYER_IMAGE_REGEX)) {
     try {
       const decodedImagePath = JSON.parse(imagePath.replaceAll("&#x22;", '"'));

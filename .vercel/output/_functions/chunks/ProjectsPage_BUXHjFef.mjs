@@ -1,7 +1,7 @@
-import { c as createComponent, m as maybeRenderHead, d as addAttribute, r as renderComponent, a as renderTemplate, b as createAstro } from './astro/server_CH_ZUc5U.mjs';
+import { c as createComponent, m as maybeRenderHead, d as addAttribute, r as renderComponent, a as renderTemplate, b as createAstro } from './astro/server_uUssfg5y.mjs';
 import 'piccolore';
-import { a as getLangFromUrl, c as getEntries, u as useTranslations, d as useTranslatedPath } from './_astro_content_DBlyr6LJ.mjs';
-import { $ as $$Image } from './_astro_assets_AKK8XZqR.mjs';
+import { a as getLangFromUrl, c as getEntries, u as useTranslations, d as useTranslatedPath } from './_astro_content_uRh5PISs.mjs';
+import { $ as $$Image } from './_astro_assets_DEwNP_oA.mjs';
 
 const $$Astro = createAstro();
 const $$ProjectsPage = createComponent(async ($$result, $$props, $$slots) => {
