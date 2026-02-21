@@ -4,11 +4,29 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "cross-env ASTRO_DATABASE_FILE=./db.sqlite astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "db:push": "astro db push",
+    "db:shell": "astro db shell",
+    "db:reset": "astro db reset",
+    "db:login": "astro db login"
   },
   "dependencies": {
-    "astro": "^5.17.1"
+    "@astrojs/db": "^0.19.0",
+    "@astrojs/react": "^4.4.2",
+    "@astrojs/tailwind": "^5.1.5",
+    "@tailwindcss/vite": "^4.1.18",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "astro": "^5.17.1",
+    "lucide-react": "^0.564.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "@astrojs/vercel": "^9.0.4",
+    "cross-env": "^10.1.0"
   }
 }

@@ -1,0 +1,82 @@
+---
+import { getLangFromUrl, useTranslations, useTranslatedPath } from "@i18n/utils";
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import { getEntries } from "astro:content";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+
+interface Props {
+  projects: CollectionEntry<"projects">[];
+}
+
+const { projects } = Astro.props;
+---
+
+<section class="container px-4 py-16">
+  <h1 class="text-4xl lg:text-5xl font-bold text-text-main mb-12 text-center">
+    {t("nav.proyectos")}
+  </h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {
+      projects.map(async (project) => {
+        const projectIdCleaned = project.slug.replace(`${lang}/`, "");
+        const categories = await getEntries(project.data.category);
+
+        return (
+          <article class="bg-surface rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+            <a href={translatePath(`/projects/${projectIdCleaned}`)}>
+              <Image
+                src={project.data.cover}
+                alt={project.data.title}
+                class="w-full h-48 object-cover"
+              />
+            </a>
+
+            <div class="p-6">
+              <a
+                href={translatePath(`/projects/${projectIdCleaned}`)}
+                class="hover:text-primary-700"
+              >
+                <h3 class="text-xl font-bold text-text-main mb-2 line-clamp-1">
+                  {project.data.title}
+                </h3>
+              </a>
+
+              <p class="text-text-secondary mb-4 line-clamp-3">
+                {project.data.description}
+              </p>
+
+              <div class="flex flex-wrap gap-2 mb-4">
+                {categories.map((category) => (
+                  <span
+                    class="px-2 py-1 rounded-full text-xs font-medium"
+                    style={`background-color: ${category.data.color}20; color: ${category.data.color}`}
+                  >
+                    {category.data.name}
+                  </span>
+                ))}
+              </div>
+
+              <div class="flex flex-wrap gap-2">
+                {project.data.techs.slice(0, 3).map((tech: string) => (
+                  <span class="px-2 py-1 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 rounded text-xs">
+                    {tech}
+                  </span>
+                ))}
+                {project.data.techs.length > 3 && (
+                  <span class="px-2 py-1 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded text-xs">
+                    +{project.data.techs.length - 3}
+                  </span>
+                )}
+              </div>
+            </div>
+          </article>
+        );
+      })
+    }
+  </div>
+</section>

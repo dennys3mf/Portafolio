@@ -1,0 +1,17 @@
+---
+import ProjectsPage from "@components/pages/ProjectsPage.astro";
+import Layout from "@layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import { getLangFromUrl } from "@i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+
+// Obtener proyectos del idioma actual
+const currentProjects = await getCollection("projects", ({ id }) => {
+  return id.startsWith(lang);
+});
+---
+
+<Layout title="Projects">
+  <ProjectsPage projects={currentProjects} />
+</Layout>

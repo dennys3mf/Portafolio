@@ -1,0 +1,185 @@
+---
+/**
+ * Componente Skills
+ * Muestra las habilidades destacadas con soporte multiidioma
+ */
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Datos de habilidades
+const skills = [
+  {
+    id: 1,
+    nameEs: 'Kotlin',
+    nameEn: 'Kotlin',
+    category: 'language',
+    level: 'expert' as const,
+    icon: 'kotlin',
+    yearsOfExperience: 5,
+    featured: true,
+  },
+  {
+    id: 2,
+    nameEs: 'Flutter',
+    nameEn: 'Flutter',
+    category: 'framework',
+    level: 'advanced' as const,
+    icon: 'flutter',
+    yearsOfExperience: 4,
+    featured: true,
+  },
+  {
+    id: 3,
+    nameEs: 'Astro',
+    nameEn: 'Astro',
+    category: 'framework',
+    level: 'advanced' as const,
+    icon: 'astro',
+    yearsOfExperience: 1,
+    featured: true,
+  },
+  {
+    id: 4,
+    nameEs: 'TypeScript',
+    nameEn: 'TypeScript',
+    category: 'language',
+    level: 'expert' as const,
+    icon: 'typescript',
+    yearsOfExperience: 3,
+    featured: true,
+  },
+  {
+    id: 5,
+    nameEs: 'React',
+    nameEn: 'React',
+    category: 'framework',
+    level: 'advanced' as const,
+    icon: 'react',
+    yearsOfExperience: 3,
+    featured: true,
+  },
+  {
+    id: 6,
+    nameEs: 'Tailwind CSS',
+    nameEn: 'Tailwind CSS',
+    category: 'tool',
+    level: 'expert' as const,
+    icon: 'tailwindcss',
+    yearsOfExperience: 3,
+    featured: true,
+  },
+  {
+    id: 7,
+    nameEs: 'Firebase',
+    nameEn: 'Firebase',
+    category: 'tool',
+    level: 'advanced' as const,
+    icon: 'firebase',
+    yearsOfExperience: 4,
+    featured: true,
+  },
+  {
+    id: 8,
+    nameEs: 'Git',
+    nameEn: 'Git',
+    category: 'tool',
+    level: 'expert' as const,
+    icon: 'git',
+    yearsOfExperience: 6,
+    featured: true,
+  },
+];
+
+// Agrupar por categoría
+const skillsByCategory = skills.reduce((acc, skill) => {
+  const category = skill.category;
+  if (!acc[category]) {
+    acc[category] = [];
+  }
+  acc[category].push(skill);
+  return acc;
+}, {} as Record<string, typeof skills>);
+
+const categoryLabels = {
+  'language': lang === 'es' ? 'Lenguajes' : 'Languages',
+  'framework': lang === 'es' ? 'Frameworks' : 'Frameworks',
+  'tool': lang === 'es' ? 'Herramientas' : 'Tools',
+  'soft-skill': lang === 'es' ? 'Habilidades Blandas' : 'Soft Skills',
+};
+
+const levelColors = {
+  'beginner': 'bg-slate-500/20 text-slate-300',
+  'intermediate': 'bg-blue-500/20 text-blue-300',
+  'advanced': 'bg-cyan-500/20 text-cyan-300',
+  'expert': 'bg-primary/20 text-primary',
+};
+---
+
+<section id="skills" class="max-w-6xl mx-auto px-6 py-20">
+  <div class="flex flex-col gap-4 mb-12">
+    <h2 class="text-4xl md:text-5xl font-bold tracking-tight">
+      {lang === 'es' ? 'Habilidades' : 'Skills'}
+    </h2>
+    <p class="text-slate-400 text-lg max-w-2xl">
+      {lang === 'es' 
+        ? 'Tecnologías y herramientas que domino para crear soluciones de alta calidad'
+        : 'Technologies and tools I master to create high-quality solutions'}
+    </p>
+  </div>
+
+  {skills.length === 0 ? (
+    <div class="text-center py-12">
+      <p class="text-slate-400">{lang === 'es' ? 'No hay habilidades disponibles' : 'No skills available'}</p>
+    </div>
+  ) : (
+    <div class="space-y-8">
+      {Object.entries(skillsByCategory).map(([category, categorySkills]) => (
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-slate-300">
+            {categoryLabels[category as keyof typeof categoryLabels] || category}
+          </h3>
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            {categorySkills.map((skill) => {
+              const name = lang === 'es' ? skill.nameEs : skill.nameEn;
+              const levelLabel = skill.level.charAt(0).toUpperCase() + skill.level.slice(1);
+              const colorClass = levelColors[skill.level as keyof typeof levelColors] || levelColors.intermediate;
+
+              return (
+                <div
+                  class="p-4 rounded-lg border border-white/10 bg-surface/30 hover:border-primary/50 hover:bg-surface/50 transition-all group cursor-default"
+                  title={`${name} - ${levelLabel} (${skill.yearsOfExperience} years)`}
+                >
+                  <div class="flex items-start justify-between mb-2">
+                    <h4 class="font-semibold text-white group-hover:text-primary transition-colors">
+                      {name}
+                    </h4>
+                    {skill.icon && (
+                      <img
+                        src={`https://cdn.simpleicons.org/${skill.icon}/3b82f6`}
+                        alt={name}
+                        class="w-5 h-5 opacity-60 group-hover:opacity-100 transition-opacity"
+                      />
+                    )}
+                  </div>
+
+                  <div class="flex items-center gap-2">
+                    <span class={`text-xs font-bold px-2 py-1 rounded ${colorClass}`}>
+                      {levelLabel}
+                    </span>
+                    {skill.yearsOfExperience > 0 && (
+                      <span class="text-xs text-slate-500">
+                        {skill.yearsOfExperience} {skill.yearsOfExperience === 1 ? (lang === 'es' ? 'año' : 'year') : (lang === 'es' ? 'años' : 'years')}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+</section>

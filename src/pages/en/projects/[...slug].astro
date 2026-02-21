@@ -1,0 +1,24 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import ProjectPage from '../../../components/pages/ProjectPage.astro';
+import { getEntry } from 'astro:content';
+
+const lang = 'en';
+const { slug } = Astro.params;
+
+if (!slug) {
+  return Astro.redirect('/en/');
+}
+
+const project = await getEntry('projects', `${lang}/${slug}`);
+
+if (!project) {
+  return Astro.redirect('/en/');
+}
+
+const title = `${project.data.title} | Gabriel Marquez`;
+---
+
+<Layout title={title}>
+  <ProjectPage project={project} lang={lang} />
+</Layout>

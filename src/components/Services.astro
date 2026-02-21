@@ -1,0 +1,137 @@
+---
+/**
+ * Componente Services
+ * Muestra los servicios ofrecidos con soporte multiidioma
+ */
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const services = [
+  {
+    id: 1,
+    icon: '📱',
+    titleEs: 'Desarrollo Móvil',
+    titleEn: 'Mobile Development',
+    descriptionEs: 'Aplicaciones nativas y multiplataforma con Kotlin, Flutter y React Native. Experiencias móviles de alta calidad para iOS y Android.',
+    descriptionEn: 'Native and cross-platform applications with Kotlin, Flutter and React Native. High-quality mobile experiences for iOS and Android.',
+    features: ['Kotlin & Android', 'Flutter & Dart', 'React Native', 'UI/UX Design'],
+  },
+  {
+    id: 2,
+    icon: '🌐',
+    titleEs: 'Desarrollo Web',
+    titleEn: 'Web Development',
+    descriptionEs: 'Sitios web modernos, rápidos y escalables con Astro, React y tecnologías web de última generación.',
+    descriptionEn: 'Modern, fast and scalable websites with Astro, React and cutting-edge web technologies.',
+    features: ['Astro.js', 'React', 'TypeScript', 'Tailwind CSS'],
+  },
+  {
+    id: 3,
+    icon: '🚀',
+    titleEs: 'Consultoría Técnica',
+    titleEn: 'Technical Consulting',
+    descriptionEs: 'Asesoramiento en arquitectura de software, selección de tecnologías y mejores prácticas de desarrollo.',
+    descriptionEn: 'Advice on software architecture, technology selection and development best practices.',
+    features: ['Architecture', 'Code Review', 'Performance', 'Best Practices'],
+  },
+  {
+    id: 4,
+    icon: '⚡',
+    titleEs: 'Optimización & Performance',
+    titleEn: 'Optimization & Performance',
+    descriptionEs: 'Análisis y mejora del rendimiento de aplicaciones existentes. Auditoría de código y optimización de recursos.',
+    descriptionEn: 'Analysis and improvement of existing application performance. Code audit and resource optimization.',
+    features: ['Performance Audit', 'Code Optimization', 'SEO', 'Accessibility'],
+  },
+];
+---
+
+<section id="servicios" class="max-w-6xl mx-auto px-6 py-20">
+  <div class="flex flex-col gap-4 mb-12 text-center">
+    <h2 class="text-4xl md:text-5xl font-bold tracking-tight">
+      {lang === 'es' ? 'Servicios' : 'Services'}
+    </h2>
+    <p class="text-slate-400 text-lg max-w-2xl mx-auto">
+      {lang === 'es' 
+        ? 'Soluciones personalizadas para llevar tus proyectos al siguiente nivel'
+        : 'Custom solutions to take your projects to the next level'}
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {services.map((service) => {
+      const title = lang === 'es' ? service.titleEs : service.titleEn;
+      const description = lang === 'es' ? service.descriptionEs : service.descriptionEn;
+
+      return (
+        <article class="group relative overflow-hidden rounded-2xl border border-white/10 bg-surface/50 backdrop-blur-sm hover:border-primary/50 transition-all duration-300 p-8">
+          {/* Gradiente de fondo animado */}
+          <div class="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          
+          <div class="relative z-10">
+            {/* Icono */}
+            <div class="text-6xl mb-4 transform group-hover:scale-110 transition-transform duration-300">
+              {service.icon}
+            </div>
+
+            {/* Título */}
+            <h3 class="text-2xl font-bold mb-3 group-hover:text-primary transition-colors">
+              {title}
+            </h3>
+
+            {/* Descripción */}
+            <p class="text-slate-400 mb-6 leading-relaxed">
+              {description}
+            </p>
+
+            {/* Features */}
+            <div class="flex flex-wrap gap-2">
+              {service.features.map((feature) => (
+                <span class="text-xs px-3 py-1 rounded-full bg-white/5 text-slate-300 border border-white/10 hover:bg-primary/10 hover:border-primary/30 hover:text-primary transition-all">
+                  {feature}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Efecto de brillo en hover */}
+          <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/5 to-transparent pointer-events-none"></div>
+        </article>
+      );
+    })}
+  </div>
+
+  {/* Call to Action */}
+  <div class="mt-16 text-center">
+    <div class="inline-flex flex-col items-center gap-4 p-8 rounded-2xl border border-white/10 bg-surface/30 backdrop-blur-sm">
+      <p class="text-lg text-slate-300">
+        {lang === 'es' 
+          ? '¿Tienes un proyecto en mente?' 
+          : 'Do you have a project in mind?'}
+      </p>
+      <a
+        href={`${lang === 'es' ? '' : '/en'}#contacto`}
+        class="inline-flex items-center gap-2 px-8 py-4 bg-primary hover:bg-primary/90 text-white font-semibold rounded-xl transition-all hover:scale-105 shadow-lg shadow-primary/20"
+      >
+        {lang === 'es' ? '¡Hablemos!' : "Let's talk!"}
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes shine {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
+</style>

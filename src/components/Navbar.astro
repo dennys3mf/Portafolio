@@ -1,0 +1,30 @@
+---
+// src/components/Navbar.astro
+import ThemeToggle from './ThemeToggle.astro';
+import LanguageToggle from './LanguageToggle.astro';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+import { Code2 } from 'lucide-react';
+---
+<nav class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-white/10 transition-colors duration-300">
+  <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+    
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-white">G</div>
+      <span class="text-xl font-bold text-text-main tracking-tight font-sans">Gabriel Marquez</span>
+    </div>
+    
+    <div class="hidden md:flex gap-8 text-sm font-medium text-slate-500 dark:text-slate-300">
+      <a href="#inicio" class="hover:text-blue-500 transition-colors">Inicio</a>
+      <a href="#proyectos" class="hover:text-blue-500 transition-colors">Proyectos</a>
+      <a href="#servicios" class="hover:text-blue-500 transition-colors">Servicios</a>
+    </div>
+
+    <div class="flex items-center gap-4">
+    <LanguageToggle />
+    
+    <ThemeToggle />
+  </div>
+  </div>
+</nav>

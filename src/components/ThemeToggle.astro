@@ -1,0 +1,207 @@
+---
+import { Sun, Moon } from 'lucide-react';
+---
+
+<div id="theme-toggle-wrapper" class="theme-toggle-wrapper">
+  <button
+    id="theme-toggle"
+    class="theme-toggle"
+    aria-label="Toggle dark/light theme"
+    title="Toggle dark/light theme"
+  >
+    <div class="toggle-container">
+      <Sun className="sun-icon" size={18} />
+      <Moon className="moon-icon" size={18} />
+    </div>
+    <div class="toggle-slider"></div>
+  </button>
+</div>
+
+<script>
+  function getTheme(): string {
+    if (typeof localStorage !== 'undefined') {
+      return localStorage.getItem('theme') || 'system';
+    }
+    return 'system';
+  }
+
+  function setTheme(theme: string): void {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('theme', theme);
+    }
+    updateTheme(theme);
+  }
+
+  function updateTheme(theme: string): void {
+    const isDark =
+      theme === 'dark' ||
+      (theme === 'system' &&
+        typeof window !== 'undefined' &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+    document.documentElement.classList.toggle('dark', isDark);
+
+    const toggle = document.getElementById('theme-toggle');
+    if (toggle) {
+      toggle.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    }
+  }
+
+  const toggle = document.getElementById('theme-toggle');
+  if (toggle) {
+    // Set initial theme
+    const theme = getTheme();
+    updateTheme(theme);
+
+    toggle.addEventListener('click', () => {
+      const currentTheme = getTheme();
+      const isDark =
+        currentTheme === 'dark' ||
+        (currentTheme === 'system' &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+      const newTheme = isDark ? 'light' : 'dark';
+      setTheme(newTheme);
+    });
+  }
+
+  // Listen for ViewTransitions
+  document.addEventListener('astro:after-swap', () => {
+    const theme = getTheme();
+    updateTheme(theme);
+  });
+
+  // Listen for system theme changes
+  if (typeof window !== 'undefined') {
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addEventListener('change', (e) => {
+        if (getTheme() === 'system') {
+          updateTheme('system');
+        }
+      });
+  }
+</script>
+
+<style>
+  .theme-toggle-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .theme-toggle {
+    position: relative;
+    width: 56px;
+    height: 32px;
+    padding: 4px;
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+  }
+
+  .theme-toggle:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+  }
+
+  .theme-toggle[data-theme='dark']:hover {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
+  }
+
+  .toggle-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6px;
+  }
+
+  .sun-icon {
+    color: #fbbf24;
+    opacity: 1;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+  }
+
+  .moon-icon {
+    color: #60a5fa;
+    opacity: 1;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+  }
+
+  .theme-toggle[data-theme='light'] .sun-icon {
+    opacity: 1;
+    color: #fbbf24;
+  }
+
+  .theme-toggle[data-theme='light'] .moon-icon {
+    opacity: 0.3;
+    color: #60a5fa;
+  }
+
+  .theme-toggle[data-theme='dark'] .sun-icon {
+    opacity: 0.3;
+    color: #fbbf24;
+  }
+
+  .theme-toggle[data-theme='dark'] .moon-icon {
+    opacity: 1;
+    color: #60a5fa;
+  }
+
+  .toggle-slider {
+    position: absolute;
+    left: 4px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .theme-toggle[data-theme='dark'] .toggle-slider {
+    left: calc(100% - 26px);
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+    border-color: #60a5fa;
+    box-shadow: 0 4px 12px rgba(60, 165, 250, 0.3);
+  }
+
+  .theme-toggle[data-theme='light'] .toggle-slider {
+    left: 4px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    border-color: #fbbf24;
+    box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+  }
+
+  .theme-toggle:active .toggle-slider {
+    transform: scale(0.95);
+  }
+
+  /* Animación de pulso sutil en hover */
+  @keyframes pulse-glow {
+    0%,
+    100% {
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(59, 130, 246, 0.2);
+    }
+  }
+
+  .theme-toggle:hover {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+</style>

@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+:root {
+  /* Light theme — neutral, accessible, and slightly warm off-white */
+  --color-background: #0b2058; /* soft, perceptibly off-white (cool blue tint) */
+  --color-surface: #00028a;    /* card/panel background */
+  --color-card: #f1f5f9;       /* subtle card background */
+  --color-border: #003b88;     /* light separators */
+
+  /* Text */
+  --color-text-main: #ffffff;  /* deep slate for high legibility */
+  --color-text-muted: #000000; /* muted slate for secondary text */
+
+  /* Primary / Brand */
+  --color-primary: #e2d4d4;    /* vivid, accessible blue */
+  --color-primary-600: #0a4b8d;
+
+  /* Accent (sparingly used) */
+  --color-accent: #ff6b59;
+  --color-accent-600: #e54a32;
+
+  /* Ornament tint for subtle gradients */
+  --ornament-tint: rgba(11,132,255,0.06);
+
+  /* States */
+  --color-success: #16a34a;
+  --color-warning: #f59e0b;
+  --color-error: #dc2626;
+
+  /* Shadows & focus */
+  --shadow-soft: 0 8px 20px rgba(2,6,23,0.06);
+  --focus-ring: rgba(11,132,255,0.12);
+
+  /* Spacing/typography helpers */
+  --base-line-height: 1.6;
+  /* Background enhancements */
+  --background-gradient: linear-gradient(180deg, rgba(11,132,255,0.03) 0%, rgba(255,255,255,0) 40%);
+  --background-radial: radial-gradient(600px 300px at 8% 12%, rgba(11,132,255,0.04), transparent 20%), radial-gradient(500px 240px at 92% 82%, rgba(255,107,89,0.02), transparent 20%);
+  --background-fixed-overlay: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.6), rgba(255,255,255,0) 40%);
+}
+
+/* Dark overrides kept minimal */
+.dark {
+  --color-background: #0f172a;
+  --color-surface: #0f172a;
+  --color-border: #273449;
+  --color-text-main: #f8fafc;
+  --color-text-muted: #94a3b8;
+  --color-primary: #0b84ff;
+  --color-primary-600: #064e9c;
+  --shadow-soft: 0 10px 30px rgba(2,6,23,0.12);
+  --focus-ring: rgba(11,132,255,0.12);
+}
+
+/* Global readability improvements for astigmatism/myopia */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-color: var(--color-background);
+  background-image: var(--background-radial), var(--background-gradient);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  color: var(--color-text-main);
+  transition: background-color 0.2s ease, color 0.2s ease;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  line-height: var(--base-line-height);
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Headings: slightly heavier and increased letter-spacing for clarity */
+h1,h2,h3,h4,h5 {
+  color: var(--color-text-main);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* Links and focus styles */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: var(--color-primary-600);
+  outline: none;
+  box-shadow: 0 0 0 6px var(--focus-ring);
+}
+
+/* Utility components using variables */
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-soft);
+  border-radius: 12px;
+}
+
+.btn-primary {
+  background: linear-gradient(180deg, var(--color-primary), var(--color-primary-600));
+  color: white;
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-primary:focus {
+  box-shadow: 0 0 0 6px var(--focus-ring);
+}
+
+/* Ornaments previously white — use a tinted translucent gradient so they stand out */
+.ornament {
+  background: linear-gradient(135deg, rgba(255,255,255,0.6), var(--ornament-tint));
+  border-radius: 14px;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--color-border);
+}
+
+/* Icons: prefer SVGs with fill="currentColor" and control color here */
+.icon {
+  color: var(--color-primary-600);
+  filter: drop-shadow(0 6px 18px rgba(7,20,35,0.06));
+}

@@ -1,0 +1,13 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProjectsPage from '../../components/pages/ProjectsPage.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = 'en';
+const t = useTranslations(lang);
+const title = 'Projects | Gabriel Marquez';
+---
+
+<Layout title={title}>
+  <ProjectsPage lang={lang} />
+</Layout>
