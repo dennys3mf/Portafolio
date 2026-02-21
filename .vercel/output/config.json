@@ -20,26 +20,6 @@
 			"dest": "_render"
 		},
 		{
-			"src": "^/api/blog\\.json/?$",
-			"dest": "_render"
-		},
-		{
-			"src": "^/api/contact\\.json/?$",
-			"dest": "_render"
-		},
-		{
-			"src": "^/api/projects\\.json/?$",
-			"dest": "_render"
-		},
-		{
-			"src": "^/api/skills\\.json/?$",
-			"dest": "_render"
-		},
-		{
-			"src": "^/en/projects/?$",
-			"dest": "_render"
-		},
-		{
 			"src": "^/en/projects(?:/(.*?))?/?$",
 			"dest": "_render"
 		},
